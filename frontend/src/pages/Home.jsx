@@ -5,10 +5,10 @@ import { Link, useNavigate } from 'react-router-dom';
 
 const Home = () => {
   const navigate = useNavigate();
-  // useEffect(() => {
-  //   const token = localStorage.getItem('token');
-  //   if(token) navigate('/dashboard');
-  // }, []);
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if(token) navigate('/dashboard');
+  }, []);
   return (
     <div className="min-h-screen pt-24 flex flex-col justify-center items-center relative overflow-hidden">
       <div className="absolute inset-0 overflow-hidden">
