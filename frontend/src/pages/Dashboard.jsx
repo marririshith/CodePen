@@ -79,7 +79,7 @@ const Dashboard = () => {
                         <motion.button
                             onClick={handleCreate}
                             disabled={!newProjectName.trim() || isCreating}
-                            className="btn-primary whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="btn-primary whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed transition-all hover:scale-105 hover:rotate-3 duration-300"
                             whileTap={{ scale: 0.98 }}
                         >
                             {isCreating ? (
@@ -110,8 +110,8 @@ const Dashboard = () => {
                                 className="card-futuristic group cursor-pointer"
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.5, delay: 0.1 * index }}
-                                whileHover={{ scale: 1.02 }}
+                                transition={{ duration: 0.05, delay: 0.05 * index }}
+                                whileHover={{ scale: 1.08 }}
                                 onClick={() => navigate(`/editor/${project._id}`)}
                             >
                                 <div className="w-12 h-12 bg-neutral-700 rounded-lg flex items-center justify-center mb-4">

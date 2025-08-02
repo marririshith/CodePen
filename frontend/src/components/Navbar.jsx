@@ -9,7 +9,7 @@ const Navbar = () => {
             <div className="flex justify-between items-center">
                 <Link 
                     to='/' 
-                    className="text-2xl font-bold text-white hover:text-neutral-200 transition-all duration-300"
+                    className="text-2xl font-bold text-white hover:text-neutral-200 transition-all hover:scale-105 hover:rotate-3 duration-300"
                 >
                     &lt;CodeLab/&gt;
                 </Link>
@@ -30,7 +30,7 @@ const Navbar = () => {
                             
                             <button 
                                 onClick={logout}
-                                className="bg-red-500/20 hover:bg-red-500/30 border border-red-500/30 hover:border-red-500/50 text-red-300 hover:text-red-200 px-4 py-2 rounded-lg font-medium transition-all hover:scale-105 duration-300 backdrop-blur-sm"
+                                className="bg-red-500/20 hover:bg-red-500/30 border border-red-500/30 hover:border-red-500/50 text-red-300 hover:text-red-200 px-4 py-2 rounded-lg font-medium transition-all hover:scale-105 hover:rotate-3 duration-300 backdrop-blur-sm"
                             >
                                 Logout
                             </button>
