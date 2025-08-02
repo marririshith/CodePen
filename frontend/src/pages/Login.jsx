@@ -13,7 +13,7 @@ const Login = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem('user');
         if (token) {
             navigate('/');
         }

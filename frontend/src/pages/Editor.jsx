@@ -63,9 +63,22 @@ const Editor = () => {
         </html>
     `;
 
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+                e.preventDefault();
+                handleSave();
+            }
+        };
+    
+        window.addEventListener('keydown', handleKeyDown);
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [html, css, js]); 
+
     return (
-        <div className="min-h-screen pt-20 flex flex-col">
-            {/* Header */}
+        <div className="min-h-screen pt-20 flex flex-col mt-6">
             <div className="glass-card mx-4 mb-4 px-6 py-4">
                 <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-4">
@@ -104,11 +117,8 @@ const Editor = () => {
                 </div>
             </div>
 
-            {/* Main Editor */}
             <div className="flex-1 flex mx-4 mb-4 gap-4">
-                {/* Code Panel */}
-                <div className="w-1/2 glass-card overflow-hidden">
-                    {/* Tabs */}
+                    <div className="w-1/2 glass-card overflow-hidden">
                     <div className="flex bg-neutral-900/50 border-b border-white/10">
                         {tabs.map((tab) => (
                             <button
@@ -125,8 +135,6 @@ const Editor = () => {
                             </button>
                         ))}
                     </div>
-
-                    {/* Code Editor */}
                     <div className="h-full">
                         {tabs.map((tab) => (
                             <div
@@ -150,8 +158,6 @@ const Editor = () => {
                         ))}
                     </div>
                 </div>
-
-                {/* Preview Panel */}
                 <div className="w-1/2 glass-card overflow-hidden">
                     <div className="bg-neutral-900/50 border-b border-white/10 px-4 py-3">
                         <div className="flex items-center justify-between">
