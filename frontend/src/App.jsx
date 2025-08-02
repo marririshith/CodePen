@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
@@ -10,8 +10,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
   return (
-    // <Router>
-    <>
+    <div className="min-h-screen bg-dark-950 text-white">
       <Navbar />
       <Routes>
         <Route path='/' element={<Home />} />
@@ -20,8 +19,7 @@ function App() {
         <Route path='/dashboard' element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
         <Route path='/editor/:id' element={<ProtectedRoute><Editor /></ProtectedRoute>} />
       </Routes>
-    </>
-    // </Router>
+    </div>
   );
 }
 
