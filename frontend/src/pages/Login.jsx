@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 // eslint-disable-next-line no-unused-vars
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 
@@ -10,6 +10,14 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const { login } = useAuth();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            navigate('/');
+        }
+    }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -26,10 +34,9 @@ const Login = () => {
 
     return (
         <div className="min-h-screen pt-24 flex items-center justify-center px-4">
-            {/* Background Effects */}
             <div className="absolute inset-0 overflow-hidden">
-                <div className="absolute top-20 left-20 w-32 h-32 bg-cyber-500/10 rounded-full blur-3xl animate-float" />
-                <div className="absolute bottom-20 right-20 w-40 h-40 bg-neon-500/10 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }} />
+                <div className="absolute top-20 left-20 w-32 h-32 bg-white/5 rounded-full blur-3xl animate-float" />
+                <div className="absolute bottom-20 right-20 w-40 h-40 bg-white/3 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }} />
             </div>
 
             <motion.div
@@ -38,19 +45,17 @@ const Login = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
             >
-                {/* Card */}
                 <div className="glass-card p-8">
-                    {/* Header */}
                     <div className="text-center mb-8">
                         <motion.div
                             initial={{ scale: 0.8, opacity: 0 }}
                             animate={{ scale: 1, opacity: 1 }}
                             transition={{ duration: 0.5, delay: 0.1 }}
                         >
-                            <h2 className="text-3xl font-bold bg-gradient-to-r from-cyber-400 to-neon-400 bg-clip-text text-transparent mb-2">
+                            <h2 className="text-3xl font-bold text-white mb-2">
                                 Welcome Back
                             </h2>
-                            <p className="text-gray-400">Sign in to your account</p>
+                            <p className="text-neutral-400">Sign in to your account</p>
                         </motion.div>
                     </div>
 
@@ -114,11 +119,11 @@ const Login = () => {
                         animate={{ opacity: 1 }}
                         transition={{ duration: 0.5, delay: 0.4 }}
                     >
-                        <p className="text-gray-400">
+                        <p className="text-neutral-400">
                             Don't have an account?{' '}
                             <Link
                                 to="/signup"
-                                className="text-cyber-400 hover:text-cyber-300 font-medium transition-colors duration-300"
+                                className="text-white hover:text-neutral-200 font-medium transition-colors duration-300"
                             >
                                 Create one
                             </Link>

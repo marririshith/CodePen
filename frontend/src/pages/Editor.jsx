@@ -1,5 +1,6 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+// eslint-disable-next-line no-unused-vars
 import { motion } from 'framer-motion';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
@@ -70,17 +71,17 @@ const Editor = () => {
                     <div className="flex items-center space-x-4">
                         <button
                             onClick={() => navigate('/dashboard')}
-                            className="text-gray-400 hover:text-white transition-colors duration-300"
+                            className="text-neutral-400 hover:text-white transition-colors duration-300"
                         >
                             ← Back to Dashboard
                         </button>
-                        <div className="w-px h-6 bg-gray-600"></div>
+                        <div className="w-px h-6 bg-neutral-600"></div>
                         <h1 className="text-xl font-semibold text-white">{projectName}</h1>
                     </div>
                     
                     <div className="flex items-center space-x-4">
                         {lastSaved && (
-                            <span className="text-sm text-gray-400">
+                            <span className="text-sm text-neutral-400">
                                 Saved {lastSaved.toLocaleTimeString()}
                             </span>
                         )}
@@ -108,15 +109,15 @@ const Editor = () => {
                 {/* Code Panel */}
                 <div className="w-1/2 glass-card overflow-hidden">
                     {/* Tabs */}
-                    <div className="flex bg-dark-800/50 border-b border-white/10">
+                    <div className="flex bg-neutral-900/50 border-b border-white/10">
                         {tabs.map((tab) => (
                             <button
                                 key={tab.id}
                                 onClick={() => setActiveTab(tab.id)}
                                 className={`flex-1 px-4 py-3 text-sm font-medium transition-all duration-300 ${
                                     activeTab === tab.id
-                                        ? 'text-white bg-white/10 border-b-2 border-cyber-400'
-                                        : 'text-gray-400 hover:text-white hover:bg-white/5'
+                                        ? 'text-white bg-white/10 border-b-2 border-white'
+                                        : 'text-neutral-400 hover:text-white hover:bg-white/5'
                                 }`}
                             >
                                 <span className="mr-2">{tab.icon}</span>
@@ -152,11 +153,11 @@ const Editor = () => {
 
                 {/* Preview Panel */}
                 <div className="w-1/2 glass-card overflow-hidden">
-                    <div className="bg-dark-800/50 border-b border-white/10 px-4 py-3">
+                    <div className="bg-neutral-900/50 border-b border-white/10 px-4 py-3">
                         <div className="flex items-center justify-between">
                             <div className="flex items-center space-x-2">
                                 <span className="text-white font-medium">Live Preview</span>
-                                <div className="w-2 h-2 bg-neon-400 rounded-full animate-pulse"></div>
+                                <div className="w-2 h-2 bg-neutral-400 rounded-full animate-pulse"></div>
                             </div>
                             <div className="flex space-x-2">
                                 <div className="w-3 h-3 bg-red-500 rounded-full"></div>

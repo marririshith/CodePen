@@ -7,20 +7,17 @@ const Navbar = () => {
     return (
         <nav className="fixed top-4 left-4 right-4 z-50 glass-card px-6 py-4 mx-auto max-w-6xl animate-slide-up">
             <div className="flex justify-between items-center">
-                {/* Logo */}
                 <Link 
                     to='/' 
-                    className="text-2xl font-bold bg-gradient-to-r from-cyber-400 to-neon-400 bg-clip-text text-transparent hover:from-cyber-300 hover:to-neon-300 transition-all duration-300"
+                    className="text-2xl font-bold text-white hover:text-neutral-200 transition-all duration-300"
                 >
                     &lt;CodeLab/&gt;
                 </Link>
-
-                {/* Navigation Links */}
                 <div className="flex items-center space-x-6">
                     {user ? (
                         <>
-                            <div className="flex items-center space-x-1 text-gray-300">
-                                <div className="w-2 h-2 bg-neon-400 rounded-full animate-pulse"></div>
+                            <div className="flex items-center space-x-1 text-green-300">
+                                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
                                 <span className="text-sm font-medium">{user.username}</span>
                             </div>
                             

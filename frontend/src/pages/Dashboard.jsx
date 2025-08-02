@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
-
+// eslint-disable-next-line no-unused-vars
+import { motion } from 'framer-motion';
 const Dashboard = () => {
     const [projects, setProjects] = useState([]);
     const [newProjectName, setNewProjectName] = useState('');
@@ -46,24 +46,20 @@ const Dashboard = () => {
     return (
         <div className="min-h-screen pt-24 px-4 pb-8">
             <div className="max-w-7xl mx-auto">
-                {/* Header */}
                 <motion.div
                     className="mb-12"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6 }}
                 >
-                    <h1 className="text-4xl md:text-5xl font-bold mb-4">
-                        <span className="bg-gradient-to-r from-cyber-400 to-neon-400 bg-clip-text text-transparent">
-                            Your Projects
-                        </span>
+                    <h1 className="text-4xl md:text-5xl font-bold mb-4 text-white">
+                        Your Projects
                     </h1>
-                    <p className="text-gray-400 text-lg">
+                    <p className="text-neutral-400 text-lg">
                         Create, edit, and manage your code projects
                     </p>
                 </motion.div>
 
-                {/* Create New Project */}
                 <motion.div
                     className="glass-card p-6 mb-8"
                     initial={{ opacity: 0, y: 20 }}
@@ -101,7 +97,6 @@ const Dashboard = () => {
                     </div>
                 </motion.div>
 
-                {/* Projects Grid */}
                 {projects.length > 0 ? (
                     <motion.div
                         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
@@ -119,19 +114,17 @@ const Dashboard = () => {
                                 whileHover={{ scale: 1.02 }}
                                 onClick={() => navigate(`/editor/${project._id}`)}
                             >
-                                {/* Project Icon */}
-                                <div className="w-12 h-12 bg-gradient-to-br from-cyber-500 to-neon-500 rounded-lg flex items-center justify-center mb-4">
+                                <div className="w-12 h-12 bg-neutral-700 rounded-lg flex items-center justify-center mb-4">
                                     <span className="text-white text-xl font-bold">
                                         {project.name.charAt(0).toUpperCase()}
                                     </span>
                                 </div>
 
-                                {/* Project Info */}
-                                <h3 className="text-xl font-semibold text-white mb-2 group-hover:text-cyber-300 transition-colors duration-300">
+                                <h3 className="text-xl font-semibold text-white mb-2 group-hover:text-neutral-200 transition-colors duration-300">
                                     {project.name}
                                 </h3>
                                 
-                                <div className="text-gray-400 text-sm mb-4">
+                                <div className="text-neutral-500 text-sm mb-4">
                                     {project.updatedAt ? (
                                         <span>Updated {formatDate(project.updatedAt)}</span>
                                     ) : (
@@ -139,7 +132,6 @@ const Dashboard = () => {
                                     )}
                                 </div>
 
-                                {/* Technologies */}
                                 <div className="flex flex-wrap gap-2 mb-4">
                                     {['HTML', 'CSS', 'JS'].map((tech) => (
                                         <span 
@@ -151,7 +143,6 @@ const Dashboard = () => {
                                     ))}
                                 </div>
 
-                                {/* Action Button */}
                                 <div className="flex items-center justify-between mt-auto">
                                     <span className="text-gray-500 text-sm">Click to edit</span>
                                     <div className="w-6 h-6 text-gray-400 group-hover:text-white transition-colors duration-300">
@@ -168,11 +159,11 @@ const Dashboard = () => {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.2 }}
                     >
-                        <div className="w-24 h-24 bg-gradient-to-br from-cyber-500/20 to-neon-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
-                            <span className="text-4xl">📝</span>
+                                                <div className="w-24 h-24 bg-neutral-800 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <span className="text-4xl opacity-60">📝</span>
                         </div>
                         <h3 className="text-2xl font-semibold text-white mb-4">No projects yet</h3>
-                        <p className="text-gray-400 mb-8 max-w-md mx-auto">
+                        <p className="text-neutral-400 mb-8 max-w-md mx-auto">
                             Create your first project to start building amazing things with HTML, CSS, and JavaScript.
                         </p>
                         <button
