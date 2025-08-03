@@ -26,7 +26,7 @@ const Editor = () => {
             setJs(res.data.js || '');
             setProjectName(res.data.name || 'Untitled Project');
         });
-    }, [id]);
+    }, [id, user?.token]);
 
     const handleSave = async () => {
         setIsSaving(true);
@@ -45,9 +45,9 @@ const Editor = () => {
     };
 
     const tabs = [
-        { id: 'html', label: 'HTML', value: html, setter: setHtml, icon: '🏗️' },
-        { id: 'css', label: 'CSS', value: css, setter: setCss, icon: '🎨' },
-        { id: 'js', label: 'JavaScript', value: js, setter: setJs, icon: '⚡' }
+        { id: 'html', label: 'HTML', value: html, setter: setHtml, icon: '🏗️', color: 'text-orange-400' },
+        { id: 'css', label: 'CSS', value: css, setter: setCss, icon: '🎨', color: 'text-blue-400' },
+        { id: 'js', label: 'JavaScript', value: js, setter: setJs, icon: '⚡', color: 'text-yellow-400' }
     ];
 
     const srcDoc = `
@@ -78,23 +78,28 @@ const Editor = () => {
     }, [html, css, js]); 
 
     return (
-        <div className="min-h-screen pt-20 flex flex-col mt-6">
-            <div className="glass-card mx-4 mb-4 px-6 py-4">
+        <div className="min-h-screen pt-28 flex flex-col">
+            {/* Enhanced Header */}
+            <div className="glass-card mx-6 mb-6 px-8 py-6">
                 <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-4">
+                    <div className="flex items-center space-x-6">
                         <button
                             onClick={() => navigate('/dashboard')}
-                            className="text-neutral-400 hover:text-white transition-colors duration-300"
+                            className="text-neutral-400 hover:text-neutral-100 transition-colors duration-300 flex items-center space-x-2 font-medium group"
                         >
-                            ← Back to Dashboard
+                            <span className="group-hover:-translate-x-1 transition-transform duration-300">←</span>
+                            <span>Back to Dashboard</span>
                         </button>
-                        <div className="w-px h-6 bg-neutral-600"></div>
-                        <h1 className="text-xl font-semibold text-white">{projectName}</h1>
+                        <div className="divider"></div>
+                        <h1 className="text-2xl font-semibold text-neutral-100">{projectName}</h1>
+                        <div className="px-3 py-1 bg-emerald-900/30 text-emerald-300 text-xs rounded-full border border-emerald-800/50">
+                            Live
+                        </div>
                     </div>
                     
-                    <div className="flex items-center space-x-4">
+                    <div className="flex items-center space-x-6">
                         {lastSaved && (
-                            <span className="text-sm text-neutral-400">
+                            <span className="text-sm text-neutral-500 font-medium">
                                 Saved {lastSaved.toLocaleTimeString()}
                             </span>
                         )}
@@ -106,36 +111,39 @@ const Editor = () => {
                         >
                             {isSaving ? (
                                 <div className="flex items-center">
-                                    <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin mr-2" />
+                                    <div className="loading-spinner mr-3" />
                                     Saving...
                                 </div>
                             ) : (
-                                'Save Project'
+                                <span className="flex items-center">
+                                    <span>💾</span>
+                                    <span className="ml-2">Save Project</span>
+                                </span>
                             )}
                         </motion.button>
                     </div>
                 </div>
             </div>
 
-            <div className="flex-1 flex mx-4 mb-4 gap-4">
-                    <div className="w-1/2 glass-card overflow-hidden">
-                    <div className="flex bg-neutral-900/50 border-b border-white/10">
+            {/* Enhanced Editor Layout */}
+            <div className="flex-1 flex mx-6 mb-6 gap-6">
+                {/* Code Editor Panel */}
+                <div className="w-1/2 glass-card overflow-hidden">
+                    <div className="flex bg-neutral-800 border-b border-neutral-700">
                         {tabs.map((tab) => (
                             <button
                                 key={tab.id}
                                 onClick={() => setActiveTab(tab.id)}
-                                className={`flex-1 px-4 py-3 text-sm font-medium transition-all duration-300 ${
-                                    activeTab === tab.id
-                                        ? 'text-white bg-white/10 border-b-2 border-white'
-                                        : 'text-neutral-400 hover:text-white hover:bg-white/5'
+                                className={`editor-tab flex-1 ${
+                                    activeTab === tab.id ? 'active' : ''
                                 }`}
                             >
-                                <span className="mr-2">{tab.icon}</span>
-                                {tab.label}
+                                <span className={`mr-2 text-base ${tab.color}`}>{tab.icon}</span>
+                                <span className={activeTab === tab.id ? tab.color : ''}>{tab.label}</span>
                             </button>
                         ))}
                     </div>
-                    <div className="h-full">
+                    <div className="h-full bg-neutral-900">
                         {tabs.map((tab) => (
                             <div
                                 key={tab.id}
@@ -144,13 +152,13 @@ const Editor = () => {
                                 <textarea
                                     value={tab.value}
                                     onChange={(e) => tab.setter(e.target.value)}
-                                    className="w-full h-full resize-none bg-transparent text-white font-mono p-4 focus:outline-none"
+                                    className="w-full h-full resize-none bg-neutral-900 text-neutral-100 font-mono p-6 focus:outline-none border-none"
                                     placeholder={`Enter your ${tab.label.toLowerCase()} code here...`}
                                     style={{
-                                        minHeight: 'calc(100vh - 200px)',
+                                        minHeight: 'calc(100vh - 280px)',
                                         fontFamily: 'JetBrains Mono, Fira Code, Consolas, monospace',
                                         fontSize: '14px',
-                                        lineHeight: '1.5',
+                                        lineHeight: '1.6',
                                         tabSize: 2
                                     }}
                                 />
@@ -158,18 +166,18 @@ const Editor = () => {
                         ))}
                     </div>
                 </div>
+
+                {/* Enhanced Preview Panel */}
                 <div className="w-1/2 glass-card overflow-hidden">
-                    <div className="bg-neutral-900/50 border-b border-white/10 px-4 py-3">
-                        <div className="flex items-center justify-between">
-                            <div className="flex items-center space-x-2">
-                                <span className="text-white font-medium">Live Preview</span>
-                                <div className="w-2 h-2 bg-neutral-400 rounded-full animate-pulse"></div>
-                            </div>
-                            <div className="flex space-x-2">
-                                <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-                                <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-                                <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                            </div>
+                    <div className="preview-header">
+                        <div className="flex items-center space-x-3">
+                            <span className="text-neutral-300 font-medium">Live Preview</span>
+                            <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
+                        </div>
+                        <div className="preview-controls">
+                            <div className="preview-control red"></div>
+                            <div className="preview-control yellow"></div>
+                            <div className="preview-control green"></div>
                         </div>
                     </div>
                     
@@ -179,7 +187,7 @@ const Editor = () => {
                         sandbox="allow-scripts allow-forms allow-popups allow-modals allow-orientation-lock allow-pointer-lock allow-presentation allow-same-origin"
                         srcDoc={srcDoc}
                         style={{
-                            height: 'calc(100vh - 200px)',
+                            height: 'calc(100vh - 280px)',
                             border: 'none'
                         }}
                     />
