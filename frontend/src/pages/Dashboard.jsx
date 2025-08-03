@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 // eslint-disable-next-line no-unused-vars
 import { motion } from 'framer-motion';
+
 const Dashboard = () => {
     const [projects, setProjects] = useState([]);
     const [newProjectName, setNewProjectName] = useState('');
@@ -15,7 +16,7 @@ const Dashboard = () => {
         axios.get('http://localhost:5000/api/projects', {
             headers: { Authorization: `Bearer ${user?.token}` },
         }).then(res => setProjects(res.data));
-    }, []);
+    }, [user?.token]);
 
     const handleCreate = async () => {
         if (!newProjectName.trim()) return;
@@ -44,53 +45,53 @@ const Dashboard = () => {
     };
 
     return (
-        <div className="min-h-screen pt-24 px-4 pb-8">
+        <div className="min-h-screen pt-32 px-6 pb-12">
             <div className="max-w-7xl mx-auto">
                 <motion.div
-                    className="mb-12"
+                    className="mb-16"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6 }}
                 >
-                    <h1 className="text-4xl md:text-5xl font-bold mb-4 text-white">
+                    <h1 className="text-5xl md:text-6xl font-bold mb-6 text-neutral-100 text-balance">
                         Your Projects
                     </h1>
-                    <p className="text-neutral-400 text-lg">
-                        Create, edit, and manage your code projects
+                    <p className="text-neutral-400 text-xl leading-relaxed">
+                        Create, edit, and manage your code projects in the dark
                     </p>
                 </motion.div>
 
                 <motion.div
-                    className="glass-card p-6 mb-8"
+                    className="glass-card p-8 mb-12"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: 0.1 }}
                 >
-                    <h3 className="text-xl font-semibold mb-4 text-white">Create New Project</h3>
+                    <h3 className="text-2xl font-semibold mb-6 text-neutral-100">Create New Project</h3>
                     <div className="flex flex-col sm:flex-row gap-4">
                         <input
                             type="text"
                             value={newProjectName}
                             onChange={e => setNewProjectName(e.target.value)}
                             placeholder="Enter project name..."
-                            className="input-futuristic flex-1"
+                            className="input-futuristic flex-1 focus-ring"
                             onKeyPress={(e) => e.key === 'Enter' && handleCreate()}
                         />
                         <motion.button
                             onClick={handleCreate}
                             disabled={!newProjectName.trim() || isCreating}
-                            className="btn-primary whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed transition-all hover:scale-105 hover:rotate-3 duration-300"
+                            className="btn-primary whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed"
                             whileTap={{ scale: 0.98 }}
                         >
                             {isCreating ? (
                                 <div className="flex items-center">
-                                    <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin mr-2" />
+                                    <div className="loading-spinner mr-3" />
                                     Creating...
                                 </div>
                             ) : (
                                 <span className="flex items-center">
                                     <span>Create Project</span>
-                                    <span className="ml-2">+</span>
+                                    <span className="ml-2 text-lg">+</span>
                                 </span>
                             )}
                         </motion.button>
@@ -99,7 +100,7 @@ const Dashboard = () => {
 
                 {projects.length > 0 ? (
                     <motion.div
-                        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+                        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.2 }}
@@ -110,21 +111,21 @@ const Dashboard = () => {
                                 className="card-futuristic group cursor-pointer"
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.05, delay: 0.05 * index }}
-                                whileHover={{ scale: 1.08 }}
+                                transition={{ duration: 0.4, delay: 0.05 * index }}
+                                whileHover={{ scale: 1.02 }}
                                 onClick={() => navigate(`/editor/${project._id}`)}
                             >
-                                <div className="w-12 h-12 bg-neutral-700 rounded-lg flex items-center justify-center mb-4">
-                                    <span className="text-white text-xl font-bold">
+                                <div className="w-14 h-14 bg-gradient-to-br from-neutral-700 to-neutral-800 rounded-2xl flex items-center justify-center mb-6 group-hover:from-neutral-600 group-hover:to-neutral-700 transition-all duration-300 shadow-lg">
+                                    <span className="text-neutral-200 text-xl font-bold">
                                         {project.name.charAt(0).toUpperCase()}
                                     </span>
                                 </div>
 
-                                <h3 className="text-xl font-semibold text-white mb-2 group-hover:text-neutral-200 transition-colors duration-300">
+                                <h3 className="text-xl font-semibold text-neutral-100 mb-3 group-hover:text-neutral-200 transition-colors duration-300">
                                     {project.name}
                                 </h3>
 
-                                <div className="text-neutral-500 text-sm mb-4">
+                                <div className="text-neutral-500 text-sm mb-6">
                                     {project.updatedAt ? (
                                         <span>Updated {formatDate(project.updatedAt)}</span>
                                     ) : (
@@ -132,20 +133,24 @@ const Dashboard = () => {
                                     )}
                                 </div>
 
-                                <div className="flex flex-wrap gap-2 mb-4">
-                                    {['HTML', 'CSS', 'JS'].map((tech) => (
+                                <div className="flex flex-wrap gap-2 mb-6">
+                                    {[
+                                        { name: 'HTML', color: 'bg-orange-900/30 text-orange-300 border-orange-800/50' },
+                                        { name: 'CSS', color: 'bg-blue-900/30 text-blue-300 border-blue-800/50' },
+                                        { name: 'JS', color: 'bg-yellow-900/30 text-yellow-300 border-yellow-800/50' }
+                                    ].map((tech) => (
                                         <span
-                                            key={tech}
-                                            className="px-2 py-1 bg-white/10 text-xs rounded-md text-gray-300"
+                                            key={tech.name}
+                                            className={`px-3 py-1 text-xs rounded-lg font-medium border ${tech.color}`}
                                         >
-                                            {tech}
+                                            {tech.name}
                                         </span>
                                     ))}
                                 </div>
 
-                                <div className="flex items-center justify-between mt-auto">
-                                    <span className="text-gray-500 text-sm">Click to edit</span>
-                                    <div className="w-6 h-6 text-gray-400 group-hover:text-white transition-colors duration-300">
+                                <div className="flex items-center justify-between mt-auto pt-4 border-t border-neutral-700">
+                                    <span className="text-neutral-500 text-sm font-medium">Click to edit</span>
+                                    <div className="w-6 h-6 text-neutral-500 group-hover:text-neutral-300 transition-colors duration-300 group-hover:translate-x-1">
                                         →
                                     </div>
                                 </div>
@@ -154,17 +159,17 @@ const Dashboard = () => {
                     </motion.div>
                 ) : (
                     <motion.div
-                        className="text-center py-20"
+                        className="empty-state"
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.2 }}
                     >
-                        <div className="w-24 h-24 bg-neutral-800 rounded-full flex items-center justify-center mx-auto mb-6">
-                            <span className="text-4xl opacity-60">📝</span>
+                        <div className="empty-state-icon">
+                            <span className="text-3xl opacity-60">📝</span>
                         </div>
-                        <h3 className="text-2xl font-semibold text-white mb-4">No projects yet</h3>
-                        <p className="text-neutral-400 mb-8 max-w-md mx-auto">
-                            Create your first project to start building amazing things with HTML, CSS, and JavaScript.
+                        <h3 className="empty-state-title">No projects yet</h3>
+                        <p className="empty-state-description">
+                            Create your first project to start building amazing things with HTML, CSS, and JavaScript in our dark environment.
                         </p>
                         <button
                             onClick={() => document.querySelector('input').focus()}
