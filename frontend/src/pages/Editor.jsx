@@ -18,7 +18,7 @@ const Editor = () => {
     const [projectName, setProjectName] = useState('');
 
     useEffect(() => {
-        axios.get(`http://localhost:8080/api/projects/${id}`, {
+        axios.get(`http://localhost:5000/api/projects/${id}`, {
             headers: { Authorization: `Bearer ${user?.token}` },
         }).then(res => {
             setHtml(res.data.html || '');
@@ -31,7 +31,7 @@ const Editor = () => {
     const handleSave = async () => {
         setIsSaving(true);
         try {
-            await axios.put(`http://localhost:8080/api/projects/${id}`, {
+            await axios.put(`http://localhost:5000/api/projects/${id}`, {
                 html, css, js
             }, {
                 headers: { Authorization: `Bearer ${user?.token}` },
@@ -70,12 +70,12 @@ const Editor = () => {
                 handleSave();
             }
         };
-    
+
         window.addEventListener('keydown', handleKeyDown);
         return () => {
             window.removeEventListener('keydown', handleKeyDown);
         };
-    }, [html, css, js]); 
+    }, [html, css, js]);
 
     return (
         <div className="min-h-screen pt-20 flex flex-col mt-6">
@@ -91,7 +91,7 @@ const Editor = () => {
                         <div className="w-px h-6 bg-neutral-600"></div>
                         <h1 className="text-xl font-semibold text-white">{projectName}</h1>
                     </div>
-                    
+
                     <div className="flex items-center space-x-4">
                         {lastSaved && (
                             <span className="text-sm text-neutral-400">
@@ -118,17 +118,16 @@ const Editor = () => {
             </div>
 
             <div className="flex-1 flex mx-4 mb-4 gap-4">
-                    <div className="w-1/2 glass-card overflow-hidden">
+                <div className="w-1/2 glass-card overflow-hidden">
                     <div className="flex bg-neutral-900/50 border-b border-white/10">
                         {tabs.map((tab) => (
                             <button
                                 key={tab.id}
                                 onClick={() => setActiveTab(tab.id)}
-                                className={`flex-1 px-4 py-3 text-sm font-medium transition-all duration-300 ${
-                                    activeTab === tab.id
+                                className={`flex-1 px-4 py-3 text-sm font-medium transition-all duration-300 ${activeTab === tab.id
                                         ? 'text-white bg-white/10 border-b-2 border-white'
                                         : 'text-neutral-400 hover:text-white hover:bg-white/5'
-                                }`}
+                                    }`}
                             >
                                 <span className="mr-2">{tab.icon}</span>
                                 {tab.label}
@@ -172,7 +171,7 @@ const Editor = () => {
                             </div>
                         </div>
                     </div>
-                    
+
                     <iframe
                         className="w-full bg-white"
                         title="Live Preview"

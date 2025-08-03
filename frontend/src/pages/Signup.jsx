@@ -16,7 +16,7 @@ const Signup = () => {
         e.preventDefault();
         setIsLoading(true);
         try {
-            const res = await axios.post('http://localhost:8080/api/signup', { email, username, password });
+            const res = await axios.post('http://localhost:5000/api/signup', { email, username, password });
             login(res.data);
         } catch (error) {
             console.error('Signup failed:', error);

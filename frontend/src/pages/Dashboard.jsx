@@ -12,17 +12,17 @@ const Dashboard = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        axios.get('http://localhost:8080/api/projects', {
+        axios.get('http://localhost:5000/api/projects', {
             headers: { Authorization: `Bearer ${user?.token}` },
         }).then(res => setProjects(res.data));
     }, []);
 
     const handleCreate = async () => {
         if (!newProjectName.trim()) return;
-        
+
         setIsCreating(true);
         try {
-            const res = await axios.post('http://localhost:8080/api/projects', {
+            const res = await axios.post('http://localhost:5000/api/projects', {
                 name: newProjectName,
             }, {
                 headers: { Authorization: `Bearer ${user?.token}` },
@@ -123,7 +123,7 @@ const Dashboard = () => {
                                 <h3 className="text-xl font-semibold text-white mb-2 group-hover:text-neutral-200 transition-colors duration-300">
                                     {project.name}
                                 </h3>
-                                
+
                                 <div className="text-neutral-500 text-sm mb-4">
                                     {project.updatedAt ? (
                                         <span>Updated {formatDate(project.updatedAt)}</span>
@@ -134,7 +134,7 @@ const Dashboard = () => {
 
                                 <div className="flex flex-wrap gap-2 mb-4">
                                     {['HTML', 'CSS', 'JS'].map((tech) => (
-                                        <span 
+                                        <span
                                             key={tech}
                                             className="px-2 py-1 bg-white/10 text-xs rounded-md text-gray-300"
                                         >
@@ -159,7 +159,7 @@ const Dashboard = () => {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.2 }}
                     >
-                                                <div className="w-24 h-24 bg-neutral-800 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <div className="w-24 h-24 bg-neutral-800 rounded-full flex items-center justify-center mx-auto mb-6">
                             <span className="text-4xl opacity-60">📝</span>
                         </div>
                         <h3 className="text-2xl font-semibold text-white mb-4">No projects yet</h3>
